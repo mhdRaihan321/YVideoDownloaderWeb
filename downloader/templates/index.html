@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>YouTube Video Downloader</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f2f2f2;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+        h1 {
+            color: #333;
+            margin-bottom: 20px;
+        }
+        p {
+            color: #666;
+            margin-bottom: 20px;
+        }
+        form {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        input[type="text"] {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+            font-size: 16px;
+        }
+        button[type="submit"] {
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s;
+        }
+        button[type="submit"]:hover {
+            background-color: #0056b3;
+        }
+        .ads-container {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>Welcome to YouTube Video Downloader</h1>
+    <p>Click Start Button to Start </p>
+
+    <form method="post" action="{% url 'download_view' %}">
+        {% csrf_token %}
+        {{ form.as_p }}
+
+        <button type="submit">Start</button>
+    </form>
+
+    <!-- Google AdSense Ad Code -->
+    <div class="ads-container">
+        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8002393143036713"
+            crossorigin="anonymous"></script>
+        <ins class="adsbygoogle"
+            style="display:block"
+            data-ad-client="ca-pub-8002393143036713"
+            data-ad-slot="6429201964"
+            data-ad-format="auto"
+            data-full-width-responsive="true"></ins>
+        <script>
+            (adsbygoogle = window.adsbygoogle || []).push({});
+        </script>
+    </div>
+</div>
+<div class="ads-container">
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8002393143036713"
+        crossorigin="anonymous"></script>
+    <ins class="adsbygoogle"
+        style="display:block"
+        data-ad-client="ca-pub-8002393143036713"
+        data-ad-slot="6429201964"
+        data-ad-format="auto"
+        data-full-width-responsive="true"></ins>
+    <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+</div>
+<div class="ads-container">
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8002393143036713"
+        crossorigin="anonymous"></script>
+    <ins class="adsbygoogle"
+        style="display:block"
+        data-ad-client="ca-pub-8002393143036713"
+        data-ad-slot="6429201964"
+        data-ad-format="auto"
+        data-full-width-responsive="true"></ins>
+    <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+</div>
+
+</body>
+<footer style="text-align: center;
+display: flex;
+flex-direction: column;
+justify-content: center;
+align-items: center;">
+    <h2>Made By Raihan </h2>
+    <h1>Since 2024</h1>
+</footer>
+</html>

@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>YouTube Video Downloader</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f7f7f7;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            max-width: 720px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            color: #333;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        form {
+            text-align: center;
+        }
+        input[type="text"] {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+            font-size: 16px;
+        }
+        button[type="submit"] {
+            padding: 10px 20px;
+            background-color: #2e6549;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s;
+        }
+        button[type="submit"]:hover {
+            background-color: #0056b3;
+        }
+        button[type="button"] {
+            padding: 10px 20px;
+            background-color: #1f6131;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s;
+        }
+        button[type="button"]:hover {
+            background-color: #0056b3;
+        }
+        .error-message {
+            color: red;
+            font-size: 14px;
+            margin-top: 10px;
+        }
+        .snackbar {
+            display: none;
+            position: fixed;
+            left: 50%;
+            transform: translateX(-50%);
+            bottom: 20px;
+            background-color: #f44336;
+            color: white;
+            padding: 16px;
+            border-radius: 5px;
+            z-index: 1;
+        }
+        li{
+            color: red;
+        }
+        label{
+            font-weight: bold;
+        }
+        #id_video_url{
+            width: 315px;
+            height: 45px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>YouTube Video Downloader</h1>
+        <form method="post" id="downloadForm">
+            {% csrf_token %}
+            <p><span id="erorr"></span></p>
+            {{ form.as_p }}
+            <button class="button" type="button" id="pasteButton">Show Video Details</button>
+            <button type="submit">Download</button>
+        </form>
+        <div id="videoDetails">
+            <h2><u> Video Details </u> </h2>
+            <p><strong>Title: <br> </strong> <span id="title"></span></p><br>
+            <p><strong>Thumbnail: <br> </strong> <img id="thumbnail" src="" alt="Thumbnail"></p> <br>
+            <p><strong>Description: <br> </strong> <span id="description"></span></p><br>
+        </div>
+    </div>
+    
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        document.getElementById('pasteButton').addEventListener('click', function() {
+            navigator.clipboard.readText()
+                .then(function(text) {
+                    // Call fetchVideoDetails function with the video URL from clipboard
+                    fetchVideoDetails(text);
+                })
+                .catch(function(err) {
+                    console.error('Failed to read clipboard contents:', err);
+                });
+        });
+    
+        // Function to fetch video details from the YouTube API
+        function fetchVideoDetails(videoUrl) {
+            // Extract video ID from the YouTube URL
+            var videoId = extractVideoId(videoUrl);
+            if (!videoId) {
+                console.error('Invalid YouTube URL');
+                document.getElementById('erorr').innerText = error;
+                return;
+            }
+    
+            // Construct the URL for fetching video details from YouTube API
+            var apiKey = 'AIzaSyBtjE9hB_i1yDdk_tccdG64OvCTFHwd9Zs';
+            var apiUrl = `https://www.googleapis.com/youtube/v3/videos?id=${videoId}&part=snippet&key=${apiKey}`;
+    
+            // Make a GET request to the YouTube API
+            fetch(apiUrl)
+                .then(function(response) {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    return response.json();
+                })
+                .then(function(data) {
+                    // Check if the response contains expected data
+                    if (!data || !data.items || data.items.length === 0 || !data.items[0].snippet) {
+                        throw new Error('Invalid response data');
+                    }
+    
+                    // Extract title, thumbnail, and description from the response
+                    var title = data.items[0].snippet.title;
+                    var thumbnail = data.items[0].snippet.thumbnails.standard.url;
+                    var description = data.items[0].snippet.description;
+                    
+                    // Display the fetched video details
+                    document.getElementById('title').innerText = title;
+                    document.getElementById('thumbnail').src = thumbnail;
+                    document.getElementById('description').innerText = description;
+    
+                    // Show the video details section
+                    document.getElementById('videoDetails').style.display = 'block';
+                })
+                .catch(function(err) {
+                    console.error('Error fetching video details:', err);
+                });
+        }
+    
+        // Function to extract video ID from YouTube URL
+        function extractVideoId(videoUrl) {
+            var videoIdMatch = videoUrl.match(/(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=|.*[&?&]v=))([^&?/]+)/i);
+            return videoIdMatch ? videoIdMatch[1] : null;
+        }
+    });
+    </script>
+</body>
+</html>

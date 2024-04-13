@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Download Successful!</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f5f5f5;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+        h1 {
+            color: #333;
+            margin-bottom: 20px;
+        }
+        p {
+            color: #666;
+            line-height: 1.6;
+            margin-bottom: 15px;
+        }
+        .download-link {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+        .download-link:hover {
+            background-color: #151b15;
+        }
+        .rd-link {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #2b9220;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+        .rd-link:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>Download Successful!</h1>
+    <p>Your video has been successfully downloaded.</p>
+    <P> <strong> Video Name : {{video_title_cleaned}}</strong></P>
+    <p>The video has been saved in the following folder:</p>
+    <p><strong>D:/YoutubeVideoDownloader/</strong></p>
+
+    <a target="_blank"  href="file:///D:/YoutubeVideoDownloader/" class="download-link" >Open Folder</a> 
+    <a target="_self"  href="http://127.0.0.1:8000/" class="rd-link" >Download Another Video</a>
+</div>
+
+</body>
+</html>
